@@ -1,8 +1,17 @@
 // Listen for form submit event
-document.getElementById('retirement-form').addEventListener('submit', calculateResults);
+document.getElementById('retirement-form').addEventListener('submit', function(e){
+    // Show Loading gif
+    document.getElementById('loading').style.display = 'block';
+    // Hide results
+    document.getElementById('results').style.display = 'none';
+
+    setTimeout(calculateResults, 2000);
+
+    e.preventDefault();
+});
 
 // Calculating the results
-function calculateResults(e) {
+function calculateResults() {
     // UI Vars
     const UIcurrentPension = document.getElementById('current-pension');
     const UIcurrentMonthly = document.getElementById('current-monthly');
@@ -34,14 +43,20 @@ function calculateResults(e) {
     }
 
     if ((annualOutgoings/0.04) < retirementFund) {
+        // Hide Loading gif
+        document.getElementById('loading').style.display = 'none';
+        // Show results
+        document.getElementById('results').style.display = 'block';
         UIyearsToRetire.value = yearsToRetire;
         console.log('If block ran condition met...')
     } else {
+        // Hide Loading gif
+        document.getElementById('loading').style.display = 'none';
+        // Hide results
+        document.getElementById('results').style.display = 'none';
         showError('Check input accuracy.');
         console.log('If block ran condition NOT met...')
     }
-
-    e.preventDefault();
 }
 
 // show error
